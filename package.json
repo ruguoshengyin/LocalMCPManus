@@ -1,16 +1,12 @@
 {
-  "name": "era",
-  "version": "10.0.0",
-  "description": "A modern Electron application template with React, Vite, TypeScript, and TailwindCSS",
+  "name": "localmcpmanus",
+  "version": "1.0.0",
+  "description": "A modern MCP desktop toolset built with Electron, React, TypeScript, and TailwindCSS",
   "main": "./out/main/main.js",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/guasam/electron-react-app"
-  },
-  "author": {
-    "name": "Guasam",
-    "url": "https://github.com/guasam"
+    "url": "https://github.com/yourusername/LocalMCPManus"
   },
   "scripts": {
     "dev": "electron-vite dev -w",
@@ -18,6 +14,7 @@
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts,.vue --fix",
     "start": "electron-vite preview",
     "postinstall": "electron-builder install-app-deps",
+    "prepare": "husky install",
     "build:unpack": "electron-vite build && electron-builder --dir",
     "build:win": "electron-vite build && electron-builder --win",
     "build:mac": "electron-vite build && electron-builder --mac",
@@ -25,7 +22,13 @@
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
-    "@electron-toolkit/utils": "^4.0.0"
+    "@electron-toolkit/utils": "^4.0.0",
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
+    "i18next": "^23.10.1",
+    "react-i18next": "^14.1.0",
+    "react-router-dom": "^6.22.3",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^2.0.0",
@@ -43,11 +46,22 @@
     "eslint": "^9.21.0",
     "eslint-plugin-react": "^7.37.4",
     "framer-motion": "^12.4.7",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "^3.5.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.9",
     "typescript": "^5.7.3",
     "vite": "^6.2.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
   }
 }
