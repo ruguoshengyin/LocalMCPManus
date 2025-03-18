@@ -1,59 +1,24 @@
-import { useEffect } from 'react';
-import useStore from '../../lib/store';
+import { useState, useEffect } from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
 
 const useTheme = () => {
-  const { settings, updateSettings } = useStore();
-  const { theme } = settings;
+  const [theme, setTheme] = useState<Theme>(() => {
+    const savedTheme = localStorage.getItem('theme') as Theme;
+    return savedTheme || 'system';
+  });
 
-  // 应用主题到DOM
-  const applyTheme = (newTheme: Theme) => {
-    const root = document.documentElement;
-    const isDark =
-      newTheme === 'dark' ||
-      (newTheme === 'system' &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches);
-
-    if (isDark) {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-  };
-
-  // 监听系统主题变化
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    const handleChange = () => {
-      if (theme === 'system') {
-        applyTheme('system');
-      }
-    };
+    const root = window.document.documentElement;
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const currentTheme = theme === 'system' ? systemTheme : theme;
 
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    root.classList.remove('light', 'dark');
+    root.classList.add(currentTheme);
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
-  // 当主题设置改变时应用主题
-  useEffect(() => {
-    applyTheme(theme);
-  }, [theme]);
-
-  // 切换主题
-  const setTheme = (newTheme: Theme) => {
-    updateSettings({ theme: newTheme });
-  };
-
-  return {
-    theme,
-    setTheme,
-    isDark:
-      theme === 'dark' ||
-      (theme === 'system' &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches),
-  };
+  return { theme, setTheme };
 };
 
 export default useTheme; 

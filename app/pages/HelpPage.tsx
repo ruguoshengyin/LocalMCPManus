@@ -3,61 +3,58 @@ import React from 'react';
 const HelpPage: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-8 dark:text-white">帮助中心</h1>
-      
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <div className="space-y-8">
-          {/* 快速开始 */}
-          <section>
-            <h2 className="text-xl font-semibold mb-4 dark:text-white">快速开始</h2>
-            <div className="prose dark:prose-invert">
-              <p>欢迎使用LocalMCPManus！本应用程序可以帮助您管理和运行本地工具。</p>
-              <ol>
-                <li>在主页浏览可用的工具</li>
-                <li>使用搜索栏快速找到所需工具</li>
-                <li>点击工具卡片上的运行按钮来执行工具</li>
-                <li>在设置中配置您的偏好</li>
-              </ol>
-            </div>
-          </section>
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+        帮助中心
+      </h1>
 
-          {/* 常见问题 */}
-          <section>
-            <h2 className="text-xl font-semibold mb-4 dark:text-white">常见问题</h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-lg font-medium mb-2 dark:text-white">如何添加新工具？</h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  您可以通过点击主页右上角的"添加工具"按钮来创建新工具。您需要提供工具的名称、描述、命令等信息。
-                </p>
-              </div>
-              <div>
-                <h3 className="text-lg font-medium mb-2 dark:text-white">如何修改工具配置？</h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  在工具卡片上点击设置图标，您可以编辑工具的所有配置信息。
-                </p>
-              </div>
-              <div>
-                <h3 className="text-lg font-medium mb-2 dark:text-white">数据存储在哪里？</h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  您可以在设置页面中查看和修改数据存储目录。默认情况下，数据存储在应用程序的本地目录中。
-                </p>
-              </div>
-            </div>
-          </section>
+      <div className="space-y-8">
+        <div className="card">
+          <h2 className="text-xl font-semibold mb-4">基本使用</h2>
+          <div className="space-y-4 text-gray-600 dark:text-gray-300">
+            <h3 className="font-medium">搜索工具</h3>
+            <p>使用顶部的搜索栏输入关键词，可以快速找到需要的工具。支持按工具名称、描述和标签进行搜索。</p>
 
-          {/* 联系支持 */}
-          <section>
-            <h2 className="text-xl font-semibold mb-4 dark:text-white">联系支持</h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              如果您遇到任何问题或需要帮助，请通过以下方式联系我们：
-            </p>
-            <ul className="list-disc list-inside mt-2 text-gray-600 dark:text-gray-300">
-              <li>在GitHub上提交Issue</li>
-              <li>发送邮件至支持团队</li>
-              <li>查看我们的文档网站</li>
+            <h3 className="font-medium">工具操作</h3>
+            <p>每个工具卡片都提供了以下操作按钮：</p>
+            <ul className="list-disc list-inside pl-4 space-y-2">
+              <li>设置：配置工具的参数和选项</li>
+              <li>运行：执行工具的功能</li>
+              <li>克隆：创建工具的副本</li>
             </ul>
-          </section>
+          </div>
+        </div>
+
+        <div className="card">
+          <h2 className="text-xl font-semibold mb-4">常见问题</h2>
+          <div className="space-y-4 text-gray-600 dark:text-gray-300">
+            <div>
+              <h3 className="font-medium">如何更改主题？</h3>
+              <p>点击右上角的设置图标，在设置页面中可以选择浅色、深色或跟随系统主题。</p>
+            </div>
+
+            <div>
+              <h3 className="font-medium">如何切换语言？</h3>
+              <p>在设置页面中可以选择简体中文或英文界面语言。</p>
+            </div>
+
+            <div>
+              <h3 className="font-medium">数据存储在哪里？</h3>
+              <p>默认情况下，数据存储在用户目录下。你可以在设置页面中修改数据存储目录。</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <h2 className="text-xl font-semibold mb-4">联系与支持</h2>
+          <div className="space-y-4 text-gray-600 dark:text-gray-300">
+            <p>如果你遇到问题或有建议：</p>
+            <ul className="list-disc list-inside pl-4 space-y-2">
+              <li>访问我们的 <a href="https://github.com/yourusername/LocalMCPManus" className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300" target="_blank" rel="noopener noreferrer">GitHub 仓库</a></li>
+              <li>提交 Issue 报告问题</li>
+              <li>参与项目讨论</li>
+              <li>贡献代码改进项目</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,26 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Tool } from '../types/tool';
+
+interface Tag {
+  id: string;
+  name: string;
+  color?: string;
+}
+
+interface Tool {
+  id: string;
+  title: string;
+  description: string;
+  tags: Tag[];
+  command?: string;
+  config?: {
+    id: string;
+    label: string;
+    type: string;
+    value: string;
+    placeholder?: string;
+  }[];
+}
 
 interface Settings {
   language: string;
@@ -8,25 +28,15 @@ interface Settings {
   dataDirectory: string;
 }
 
-interface StoreState {
-  // 工具相关
+interface State {
   tools: Tool[];
-  addTool: (tool: Tool) => void;
-  updateTool: (id: string, updates: Partial<Tool>) => void;
-  deleteTool: (id: string) => void;
-  
-  // 搜索相关
   searchTerm: string;
-  setSearchTerm: (term: string) => void;
-  
-  // 设置相关
   settings: Settings;
-  updateSettings: (updates: Partial<Settings>) => void;
-  
-  // 模态框状态
   isSettingsOpen: boolean;
-  setSettingsOpen: (isOpen: boolean) => void;
   isHelpOpen: boolean;
+  setSearchTerm: (term: string) => void;
+  updateSettings: (settings: Partial<Settings>) => void;
+  setSettingsOpen: (isOpen: boolean) => void;
   setHelpOpen: (isOpen: boolean) => void;
 }
 
@@ -41,48 +51,24 @@ const getInitialTheme = (): 'light' | 'dark' | 'system' => {
   return 'system';
 };
 
-const useStore = create<StoreState>()(
+const useStore = create<State>()(
   persist(
     (set) => ({
-      // 工具相关
       tools: [],
-      addTool: (tool) =>
-        set((state) => ({ tools: [...state.tools, tool] })),
-      updateTool: (id, updates) =>
-        set((state) => ({
-          tools: state.tools.map((tool) =>
-            tool.id === id ? { ...tool, ...updates } : tool
-          ),
-        })),
-      deleteTool: (id) =>
-        set((state) => ({
-          tools: state.tools.filter((tool) => tool.id !== id),
-        })),
-
-      // 搜索相关
       searchTerm: '',
-      setSearchTerm: (term) => set({ searchTerm: term }),
-
-      // 设置相关
       settings: {
         language: 'zh-CN',
         theme: getInitialTheme(),
         dataDirectory: '',
       },
-      updateSettings: (updates) =>
-        set((state) => {
-          const newSettings = { ...state.settings, ...updates };
-          // 如果更新了主题，保存到localStorage
-          if (updates.theme) {
-            localStorage.setItem('theme', updates.theme);
-          }
-          return { settings: newSettings };
-        }),
-
-      // 模态框状态
       isSettingsOpen: false,
-      setSettingsOpen: (isOpen) => set({ isSettingsOpen: isOpen }),
       isHelpOpen: false,
+      setSearchTerm: (term) => set({ searchTerm: term }),
+      updateSettings: (newSettings) =>
+        set((state) => ({
+          settings: { ...state.settings, ...newSettings },
+        })),
+      setSettingsOpen: (isOpen) => set({ isSettingsOpen: isOpen }),
       setHelpOpen: (isOpen) => set({ isHelpOpen: isOpen }),
     }),
     {

@@ -8,10 +8,10 @@ import appIcon from '@/resources/build/icon.png'
 import { WindowContextProvider, menuItems } from '@/lib/window'
 import '@/lib/window/window.css'
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(
   <React.StrictMode>
     <Router>
-      <WindowContextProvider titlebar={{ title: 'Electron React App', icon: appIcon, menuItems }}>
+      <WindowContextProvider titlebar={{ title: 'LocalMCPManus', icon: appIcon, menuItems }}>
         <App />
       </WindowContextProvider>
     </Router>
