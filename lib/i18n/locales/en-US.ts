@@ -39,6 +39,16 @@ export default {
     author: 'Author',
     description: 'Description',
   },
+  result: {
+    waiting: 'Waiting to Run',
+    running: 'Running',
+    success: 'Success',
+    error: 'Error',
+    retry: 'Retry',
+    edit: 'Edit Result',
+    view: 'View',
+    history: 'History',
+  },
   errors: {
     general: 'An error occurred',
     networkError: 'Network error',

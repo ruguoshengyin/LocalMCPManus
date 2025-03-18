@@ -39,6 +39,16 @@ export default {
     author: '作者',
     description: '描述',
   },
+  result: {
+    waiting: '等待运行',
+    running: '正在运行',
+    success: '运行成功',
+    error: '运行失败',
+    retry: '重试',
+    edit: '编辑结果',
+    view: '查看',
+    history: '历史记录',
+  },
   errors: {
     general: '发生错误',
     networkError: '网络错误',
