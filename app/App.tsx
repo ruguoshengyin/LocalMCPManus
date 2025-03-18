@@ -5,6 +5,10 @@ import SearchBar from './components/SearchBar';
 import ToolCard from './components/ToolCard';
 import SettingsPanel from './components/SettingsPanel';
 import ResultPanel from './components/ResultPanel';
+import HomePage from './pages/HomePage';
+import SettingsPage from './pages/SettingsPage';
+import HelpPage from './pages/HelpPage';
+import ToolDetailPage from './pages/ToolDetailPage';
 import useStore from '../lib/store';
 import useTheme from './hooks/useTheme';
 
@@ -63,6 +67,13 @@ const App: React.FC = () => {
         onHelpClick={handleHelpClick}
       />
       
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/tools/:id" element={<ToolDetailPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/help" element={<HelpPage />} />
+      </Routes>
+
       <main className="container mx-auto px-4 py-8">
         {/* 搜索栏 */}
         <div className="mb-8">

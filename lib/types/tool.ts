@@ -10,9 +10,10 @@ export interface Tool {
   description: string;
   icon?: string;
   tags: Tag[];
+  command: string;
   config?: Record<string, unknown>;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface ToolCardProps extends Tool {
