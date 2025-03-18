@@ -40,6 +40,26 @@ interface State {
   setHelpOpen: (isOpen: boolean) => void;
 }
 
+// 初始工具数据
+const initialTools: Tool[] = [
+  {
+    id: '1',
+    title: '示例工具1',
+    description: '这是一个示例工具，用于展示界面。',
+    tags: [
+      { id: '1', name: '示例', color: '#10B981' }
+    ]
+  },
+  {
+    id: '2',
+    title: '示例工具2',
+    description: '这是另一个示例工具，用于展示界面。',
+    tags: [
+      { id: '2', name: '测试', color: '#3B82F6' }
+    ]
+  }
+];
+
 // 获取初始主题
 const getInitialTheme = (): 'light' | 'dark' | 'system' => {
   // 如果用户之前设置过主题，从localStorage中获取
@@ -54,7 +74,7 @@ const getInitialTheme = (): 'light' | 'dark' | 'system' => {
 const useStore = create<State>()(
   persist(
     (set) => ({
-      tools: [],
+      tools: initialTools,
       searchTerm: '',
       settings: {
         language: 'zh-CN',

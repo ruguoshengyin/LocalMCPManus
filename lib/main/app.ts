@@ -18,6 +18,8 @@ export function createAppWindow(): void {
     webPreferences: {
       preload: join(__dirname, '../preload/preload.js'),
       sandbox: false,
+      nodeIntegration: true,
+      contextIsolation: true
     },
   })
 
@@ -26,6 +28,10 @@ export function createAppWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+    // Open DevTools in development mode
+    if (!app.isPackaged) {
+      mainWindow.webContents.openDevTools()
+    }
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
