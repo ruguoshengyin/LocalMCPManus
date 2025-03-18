@@ -25,7 +25,7 @@ function ToolCard({ tool, onSettings, onRun, onClone }) {
           ))}
         </div>
         
-        <div className="mt-4 flex justify-between">
+        <div className="mt-4 flex justify-between items-start">
           <button
             onClick={onSettings}
             className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 dark:border-gray-600 shadow-sm text-xs font-medium rounded text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
