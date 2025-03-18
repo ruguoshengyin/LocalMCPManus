@@ -1,45 +1,143 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { PlusCircleIcon, CogIcon, PlayIcon, DocumentDuplicateIcon } from '@heroicons/react/24/outline';
+
+interface Tool {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  icon?: string;
+}
 
 const HomePage: React.FC = () => {
+  const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const dummyTools: Tool[] = [
+    {
+      id: '1',
+      title: 'ChatGPT工具',
+      description: '基于ChatGPT的对话工具',
+      tags: ['AI', '对话'],
+    },
+    {
+      id: '2',
+      title: '图像生成器',
+      description: 'AI图像生成工具',
+      tags: ['AI', '图像'],
+    },
+  ];
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-        欢迎使用 LocalMCPManus
-      </h1>
-      <p className="text-gray-600 dark:text-gray-300 mb-8">
-        一个现代化的 MCP 桌面工具集，帮助您更高效地管理和使用 MCP 工具。
-      </p>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="card">
-          <h2 className="text-xl font-semibold mb-4">快速开始</h2>
-          <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-            <li>• 使用搜索栏查找工具</li>
-            <li>• 点击工具卡片查看详情</li>
-            <li>• 配置工具参数</li>
-            <li>• 运行或克隆工具</li>
-          </ul>
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+      {/* 左侧工具区 */}
+      <div className="w-80 border-r border-gray-200 dark:border-gray-700 p-4 overflow-y-auto">
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="搜索工具..."
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
         
-        <div className="card">
-          <h2 className="text-xl font-semibold mb-4">功能特点</h2>
-          <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-            <li>• 卡片式界面设计</li>
-            <li>• 支持多语言</li>
-            <li>• 深色/浅色主题</li>
-            <li>• 本地数据存储</li>
-          </ul>
+        <button className="w-full mb-4 flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+          <PlusCircleIcon className="w-5 h-5 mr-2" />
+          添加工具
+        </button>
+
+        <div className="space-y-4">
+          {dummyTools.map((tool) => (
+            <div
+              key={tool.id}
+              className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm hover:shadow-md cursor-pointer"
+              onClick={() => setSelectedTool(tool)}
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{tool.title}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{tool.description}</p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {tool.tags.map((tag) => (
+                      <span key={tag} className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 rounded-full">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3 flex space-x-2">
+                <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                  <CogIcon className="w-5 h-5" />
+                </button>
+                <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                  <PlayIcon className="w-5 h-5" />
+                </button>
+                <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                  <DocumentDuplicateIcon className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
-        
-        <div className="card">
-          <h2 className="text-xl font-semibold mb-4">帮助支持</h2>
-          <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-            <li>• 查看帮助文档</li>
-            <li>• 访问 GitHub 仓库</li>
-            <li>• 提交问题反馈</li>
-            <li>• 参与项目贡献</li>
-          </ul>
-        </div>
+      </div>
+
+      {/* 右侧编辑与结果区 */}
+      <div className="flex-1 p-6 overflow-y-auto">
+        {selectedTool ? (
+          <div className="space-y-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
+              <h2 className="text-xl font-semibold mb-4">工具设置</h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">标题</label>
+                  <input
+                    type="text"
+                    className="w-full px-4 py-2 rounded-lg border"
+                    value={selectedTool.title}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">描述</label>
+                  <textarea
+                    className="w-full px-4 py-2 rounded-lg border"
+                    rows={3}
+                    value={selectedTool.description}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">标签</label>
+                  <input
+                    type="text"
+                    className="w-full px-4 py-2 rounded-lg border"
+                    value={selectedTool.tags.join(', ')}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
+              <h2 className="text-xl font-semibold mb-4">模型设置</h2>
+              <select className="w-full px-4 py-2 rounded-lg border">
+                <option>OpenAI</option>
+                <option>Anthropic</option>
+                <option>Google</option>
+              </select>
+            </div>
+
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
+              <h2 className="text-xl font-semibold mb-4">运行结果</h2>
+              <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 min-h-[200px]">
+                <p className="text-gray-500 dark:text-gray-400">暂无运行结果</p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center h-full text-gray-500">
+            请选择左侧工具进行操作
+          </div>
+        )}
       </div>
     </div>
   );
