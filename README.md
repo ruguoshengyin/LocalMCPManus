@@ -8,6 +8,46 @@
 一个现代化的使用各种MCP工具集，基于 Electron + React + TypeScript + TailwindCSS 开发。该项目提供了一个强大的跨平台桌面应用程序，用于管理和使用任务。
 
 
+### 目录结构：
+app   #包含渲染进程的文件和组件。
+├── App.tsx
+├── assets
+│   └── logo.svg
+├── components
+│   ├── Header.jsx  #菜单栏组件。
+│   ├── NewToolButton.jsx  #新建工具按钮组件。
+│   ├── ResultsPanel.jsx    # 运行结果面板
+│   ├── SearchTools.jsx     # 搜索工具组件
+│   ├── SettingsPanel.jsx  # 工具设置页面
+│   ├── Sidebar.jsx        #侧边栏
+│   └── ToolCard.jsx      # 工具卡片
+├── index.d.ts
+├── index.html
+├── renderer.tsx  #入口，调用App.tsx进入主界面
+├── styles
+│   ├── app.css
+│   └── tailwind.css
+└── window
+    ├── components
+    │   ├── Titlebar.tsx
+    │   ├── TitlebarContext.tsx
+    │   └── WindowContext.tsx
+    ├── index.ts
+    ├── ipcEvents.ts
+    ├── titlebarMenus.ts
+    └── window.css
+lib
+├── main
+│   ├── app.ts
+│   ├── index.d.ts
+│   └── main.ts
+└── preload
+    ├── api.ts
+    ├── index.d.ts
+    └── preload.ts
+
+
+
 LocalMCPManus是一个基于Electron的桌面工具集，界面采用卡片式设计，分为左侧工具卡片区和右侧编辑与结果区。应用程序主要功能包括：
 
 ### 菜单栏：
@@ -15,7 +55,8 @@ LocalMCPManus是一个基于Electron的桌面工具集，界面采用卡片式�
 
 ### 左侧工具区：
 工具搜索功能
-MCP工具卡片展示（包含图标、标题、描述、标签等）
+下面有1个新建工具按钮：
+MCP工具卡片展示（包含展示MCP工具卡片，卡片包含图标，标题，描述，tags，设置，运行，克隆)
 卡片操作按钮（设置、运行、克隆）
 
 
@@ -25,7 +66,6 @@ MCP工具卡片展示（包含图标、标题、描述、标签等）
 MCP配置（浏览MCP商店，一键配置）
 本地数据目录设置
 运行结果展示
-
 
 <br />
 
