@@ -27,8 +27,8 @@ const ChatPage: React.FC = () => {
     <div className="flex flex-col h-full">
       <div className="text-xl font-bold mb-4">聊天助手</div>
       
-      {/* 聊天消息区域 */}
-      <div className="flex-1 overflow-auto bg-white dark:bg-gray-800 rounded-lg shadow p-4 mb-4">
+      {/* 聊天消息区域 - 增加了flex-grow-1和min-height设置 */}
+      <div className="flex-grow overflow-auto bg-white dark:bg-gray-800 rounded-lg shadow p-4 mb-2 min-h-[70vh]">
         {messages.map((message, index) => (
           <div 
             key={index} 
@@ -47,8 +47,8 @@ const ChatPage: React.FC = () => {
         ))}
       </div>
       
-      {/* 输入区域 */}
-      <div className="flex">
+      {/* 输入区域 - 减小了高度和间距 */}
+      <div className="flex h-12 mt-auto">
         <input
           type="text"
           value={inputText}
