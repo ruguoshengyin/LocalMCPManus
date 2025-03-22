@@ -2,6 +2,8 @@ import { BrowserWindow, shell, app } from 'electron'
 import { join } from 'path'
 import { registerWindowIPC } from '@/app/window/ipcEvents'
 import appIcon from '@/resources/build/icon.png?asset'
+import { ipcMain } from 'electron';
+import { readToolsData, saveToolsData } from './tool'; // 导入工具数据读取功能
 
 export function createAppWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -41,3 +43,11 @@ export function createAppWindow(): void {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
 }
+
+ipcMain.handle('get-tools-data', async () => {
+  return readToolsData();
+});
+
+ipcMain.handle('save-tools-data', async (event, toolsData) => {
+  return saveToolsData(toolsData);
+});

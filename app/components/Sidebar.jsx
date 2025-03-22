@@ -1,33 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchTools from './SearchTools';
 import NewToolButton from './NewToolButton';
 import ToolCard from './ToolCard';
 
 function Sidebar({ onToolAction }) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [tools, setTools] = useState([
-    {
-      id: '1',
-      title: '文本摘要工具',
-      description: '使用AI模型自动生成文本摘要',
-      icon: '📝',
-      tags: ['文本', 'AI', '摘要']
-    },
-    {
-      id: '2',
-      title: '图像识别工具',
-      description: '识别图像中的物体和场景',
-      icon: '🖼️',
-      tags: ['图像', 'AI', '识别']
-    },
-    {
-      id: '3',
-      title: '数据分析助手',
-      description: '帮助分析和可视化数据集',
-      icon: '📊',
-      tags: ['数据', '分析', '可视化']
-    }
-  ]);
+  const [tools, setTools] = useState([]);
+
+  useEffect(() => {
+    window.api.invoke('get-tools-data').then((data) => {
+      setTools(data);
+    });
+  }, []);
 
   // 过滤工具
   const filteredTools = tools.filter(tool => 
@@ -46,8 +30,12 @@ function Sidebar({ onToolAction }) {
       tags: ['新建']
     };
     
-    setTools([...tools, newTool]);
+    const updatedTools = [...tools, newTool];
+    setTools(updatedTools);
     onToolAction(newTool.id, 'settings');
+
+    // 保存工具数据到本地
+    window.api.invoke('save-tools-data', updatedTools);
   };
 
   return (
