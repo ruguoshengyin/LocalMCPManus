@@ -14,3 +14,18 @@ body,
   margin: 0;
   line-height: 1.4;
 }
+
+/* 在文件末尾添加以下样式 */
+
+.toggle-checkbox:checked {
+  right: 0;
+  border-color: #3b82f6;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #3b82f6;
+}
+
+.toggle-label {
+  transition: background-color 0.2s ease;
+}

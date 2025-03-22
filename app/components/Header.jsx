@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Header() {
+function Header({ onPageChange, currentPage }) {
   return (
     <header className="bg-white dark:bg-gray-800 shadow">
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
@@ -10,6 +10,40 @@ function Header() {
               <img className="h-8 w-auto" src="/assets/logo.svg" alt="LocalMCPManus" />
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">LocalMCPManus</span>
             </div>
+            
+            {/* 导航菜单 */}
+            <nav className="ml-10 flex space-x-4">
+              <button
+                onClick={() => onPageChange('home')}
+                className={`px-3 py-2 rounded-md text-sm font-medium ${
+                  currentPage === 'home'
+                    ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
+                    : 'text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }`}
+              >
+                首页
+              </button>
+              <button
+                onClick={() => onPageChange('chat')}
+                className={`px-3 py-2 rounded-md text-sm font-medium ${
+                  currentPage === 'chat'
+                    ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
+                    : 'text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }`}
+              >
+                聊天
+              </button>
+              <button
+                onClick={() => onPageChange('settings')}
+                className={`px-3 py-2 rounded-md text-sm font-medium ${
+                  currentPage === 'settings'
+                    ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
+                    : 'text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }`}
+              >
+                设置
+              </button>
+            </nav>
           </div>
           
           <div className="flex items-center">
@@ -30,5 +64,11 @@ function Header() {
     </header>
   );
 }
+
+// 添加默认属性，确保即使不传递props也能正常工作
+Header.defaultProps = {
+  onPageChange: () => {},
+  currentPage: 'home'
+};
 
 export default Header;
