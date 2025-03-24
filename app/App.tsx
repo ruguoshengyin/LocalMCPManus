@@ -1,17 +1,33 @@
 import './styles/app.css'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import SettingsPanel from './components/SettingsPanel';
 import ResultsPanel from './components/ResultsPanel';
 import ChatPage from './components/ChatPage';
-import SettingsPage from './components/SettingsPage';
+import SettingsView from './settings/SettingsView';
+import { ExtensionStateContextProvider } from "./context/ExtensionStateContext"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import TranslationProvider from "./i18n/TranslationContext"
+import ChatView from "./components/chat/ChatView"
+import { HumanRelayDialog } from "./components/human-relay/HumanRelayDialog"
+import { vscode } from "./utils/vscode"
 
 function App() {
   const [activeView, setActiveView] = useState(null); // 'settings' or 'results'
   const [activeTool, setActiveTool] = useState(null);
   const [currentPage, setCurrentPage] = useState('home'); // 'home', 'chat', 'settings'
-  
+  const [showAnnouncement, setShowAnnouncement] = useState(false)
+  	// 初始化humanRelayDialogState为isOpen为false，requestId为空字符串，promptText为空字符串
+	const [humanRelayDialogState, setHumanRelayDialogState] = useState<{
+		isOpen: boolean
+		requestId: string
+		promptText: string
+	}>({
+		isOpen: false,
+		requestId: "",
+		promptText: "",
+	})
   const handleToolAction = (toolId, action) => {
     setActiveTool(toolId);
     setActiveView(action); // action 是 'settings' 或 'results'
@@ -26,6 +42,8 @@ function App() {
       setActiveTool(null);
     }
   };
+
+  const queryClient = new QueryClient()
 
   return (
     <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-900">
@@ -61,12 +79,31 @@ function App() {
               )}
             </>
           )}
-
-          {/* 聊天页面 */}
-          {currentPage === 'chat' && <ChatPage />}
-          
-          {/* 设置页面 */}
-          {currentPage === 'settings' && <SettingsPage />}
+          <ExtensionStateContextProvider>
+            <TranslationProvider>
+                <QueryClientProvider client={queryClient}>
+                    {/* 聊天页面 */}
+                    {/* {currentPage === 'chat' && <ChatPage />} */}
+                    {currentPage === 'chat' && (
+                      <ChatView
+                        isHidden={false}
+                        showAnnouncement={showAnnouncement}
+                        hideAnnouncement={() => setShowAnnouncement(false)}
+                      />
+                    )}
+                    <HumanRelayDialog
+                      isOpen={humanRelayDialogState.isOpen}
+                      requestId={humanRelayDialogState.requestId}
+                      promptText={humanRelayDialogState.promptText}
+                      onClose={() => setHumanRelayDialogState((prev) => ({ ...prev, isOpen: false }))}
+                      onSubmit={(requestId, text) => vscode.postMessage({ type: "humanRelayResponse", requestId, text })}
+                      onCancel={(requestId) => vscode.postMessage({ type: "humanRelayCancel", requestId })}
+                    />
+                    {/* 设置页面 */}
+                    {currentPage === 'settings' && <SettingsView onDone={() => handlePageChange('home')} />}
+                </QueryClientProvider>
+            </TranslationProvider>
+          </ExtensionStateContextProvider>
         </main>
       </div>
     </div>
